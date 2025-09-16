@@ -137,7 +137,7 @@ export function BaseIModelPage(props: BaseIModelProps) {
 
   const isDataValid = () => {
     return (
-      !!imodel.name.length &&
+      !!imodel.name.trim().length &&
       !isPropertyInvalid(imodel.name, MAX_LENGTH) &&
       !isPropertyInvalid(imodel.description, MAX_LENGTH) &&
       (!imodel.extent ||

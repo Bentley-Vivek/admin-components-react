@@ -1,6 +1,13 @@
 # Change Log - @itwin/manage-versions-react
 
-This log was last generated on Mon, 09 Jun 2025 12:35:48 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Jul 2025 11:37:03 GMT and should not be manually modified.
+
+## 2.2.0
+Wed, 30 Jul 2025 11:37:03 GMT
+
+### Minor changes
+
+- Added hide version option for manage versions
 
 ## 2.1.1
 Mon, 09 Jun 2025 12:35:48 GMT

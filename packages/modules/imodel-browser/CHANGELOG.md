@@ -1,6 +1,27 @@
 # Change Log - @itwin/imodel-browser-react
 
-This log was last generated on Tue, 15 Jul 2025 19:19:08 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Sep 2025 13:34:59 GMT and should not be manually modified.
+
+## 3.3.0
+Thu, 11 Sep 2025 13:34:59 GMT
+
+### Minor changes
+
+- Add option to pass $orderby API query param
+
+## 3.2.2
+Tue, 09 Sep 2025 16:36:14 GMT
+
+### Patches
+
+- Update iTwinFull type definition
+
+## 3.2.1
+Wed, 23 Jul 2025 11:03:45 GMT
+
+### Patches
+
+- Show Tile Metadata if provided
 
 ## 3.2.0
 Tue, 15 Jul 2025 19:19:08 GMT

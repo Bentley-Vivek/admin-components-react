@@ -2,6 +2,18 @@
   "name": "@itwin/create-imodel-react",
   "entries": [
     {
+      "version": "2.2.1",
+      "tag": "@itwin/create-imodel-react_v2.2.1",
+      "date": "Thu, 14 Aug 2025 13:33:52 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Disable create button when the name input contains only whitespace characters"
+          }
+        ]
+      }
+    },
+    {
       "version": "2.2.0",
       "tag": "@itwin/create-imodel-react_v2.2.0",
       "date": "Mon, 12 May 2025 12:34:53 GMT",

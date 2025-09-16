@@ -43,12 +43,20 @@ export interface ITwinFull {
   type?: string;
   number?: string;
   displayName?: string;
+  geographicLocation?: string;
+  latitude?: number;
+  longitude?: number;
+  ianaTimeZone?: string;
   dataCenterLocation?: string;
   status?: ITwinStatus;
   parentId?: string;
   iTwinAccountId?: string;
+  imageName?: string;
+  image?: string;
   createdDateTime?: string;
   createdBy?: string;
+  lastModifiedDateTime?: string;
+  lastModifiedBy?: string;
 }
 
 /** An object that allow various configuration of the API access */

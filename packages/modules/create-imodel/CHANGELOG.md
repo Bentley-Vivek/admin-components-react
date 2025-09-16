@@ -1,6 +1,13 @@
 # Change Log - @itwin/create-imodel-react
 
-This log was last generated on Mon, 12 May 2025 12:34:53 GMT and should not be manually modified.
+This log was last generated on Thu, 14 Aug 2025 13:33:52 GMT and should not be manually modified.
+
+## 2.2.1
+Thu, 14 Aug 2025 13:33:52 GMT
+
+### Patches
+
+- Disable create button when the name input contains only whitespace characters
 
 ## 2.2.0
 Mon, 12 May 2025 12:34:53 GMT

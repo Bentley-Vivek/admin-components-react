@@ -60,6 +60,7 @@ export const IModelTile = ({
     moreOptions,
     isDisabled,
     onClick,
+    metadata,
     ...rest
   } = tileProps ?? {};
 
@@ -133,6 +134,11 @@ export const IModelTile = ({
           >
             {moreOptions ?? moreOptionsBuilt}
           </Tile.MoreOptions>
+        )}
+        {metadata && (
+          <Tile.Metadata data-testid={`iModel-tile-${iModel.id}-metadata`}>
+            {metadata}
+          </Tile.Metadata>
         )}
       </Tile.ContentArea>
       {buttons && <Tile.Buttons>{buttons}</Tile.Buttons>}

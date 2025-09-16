@@ -62,4 +62,18 @@ describe("IModelTile", () => {
     name.click();
     expect(onThumbnailClick).toHaveBeenCalledWith(iModel);
   });
+  it("should display metadata if provided", () => {
+    const { getByTestId } = render(
+      <IModelTile
+        iModel={iModel}
+        tileProps={{
+          metadata: <div>New iModel Metadata</div>,
+        }}
+      />
+    );
+
+    // check if metadata is displayed
+    const metadata = getByTestId(`iModel-tile-${iModel.id}-metadata`);
+    expect(metadata).toBeInTheDocument();
+  });
 });

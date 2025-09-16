@@ -7,7 +7,7 @@ iTwin Administration feature components for the iTwin Platform.
 | Name                         | Folder                                | Description                                                                  |
 | ---------------------------- | ------------------------------------- | ---------------------------------------------------------------------------- |
 | @itwin/imodel-browser-react  | packages/modules/imodel-browser       | Components that let the user browse the iModels of a context and select one. |
-| @itwin/platform-storybook    | packages/apps/storybook               | Storybook to facilitate development of components                            |
+| @itwin/platform-storybook    | packages/apps/storybook               | Storybook to facilitate development of components.                           |
 | @itwin/storybook-auth-addon  | packages/modules/storybook-auth-addon | Addon to storybook to enable OIDC client authentication for stories.         |
 | @itwin/delete-imodel-react   | packages/modules/delete-imodel        | Component to delete an iModel.                                               |
 | @itwin/delete-itwin-react    | packages/modules/delete-itwin         | Component to delete an iTwin.                                                |

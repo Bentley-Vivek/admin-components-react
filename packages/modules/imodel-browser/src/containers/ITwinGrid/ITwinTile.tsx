@@ -169,7 +169,11 @@ export const ITwinTile = ({
           <Tile.Description>
             {description ?? iTwin.number ?? ""}
           </Tile.Description>
-          {metadata && <Tile.Metadata>{metadata}</Tile.Metadata>}
+          {metadata && (
+            <Tile.Metadata data-testid={`iTwin-tile-${iTwin.id}-metadata`}>
+              {metadata}
+            </Tile.Metadata>
+          )}
           {children}
           {(moreOptions || moreOptionsBuilt) && (
             <Tile.MoreOptions

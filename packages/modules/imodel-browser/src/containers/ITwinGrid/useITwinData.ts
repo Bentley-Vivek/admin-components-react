@@ -20,6 +20,7 @@ export interface ProjectDataHookOptions {
   accessToken?: string | (() => Promise<string>) | undefined;
   apiOverrides?: ApiOverrides<ITwinFull[]>;
   filterOptions?: ITwinFilterOptions;
+  orderbyOptions?: string;
   shouldRefetchFavorites?: boolean;
   resetShouldRefetchFavorites?: () => void;
 }
@@ -32,6 +33,7 @@ export const useITwinData = ({
   accessToken,
   apiOverrides,
   filterOptions,
+  orderbyOptions,
   shouldRefetchFavorites,
   resetShouldRefetchFavorites,
 }: ProjectDataHookOptions) => {
@@ -76,6 +78,7 @@ export const useITwinData = ({
     accessToken,
     requestType,
     iTwinSubClass,
+    orderbyOptions,
     data,
     serverEnvironmentPrefix,
     refetchData,
@@ -110,9 +113,14 @@ export const useITwinData = ({
       ["favorites", "recents"].includes(requestType) || !filterOptions
         ? ""
         : `&$search=${encodeURIComponent(String(filterOptions).trim())}`;
+    const orderby =
+      ["favorites", "recents"].includes(requestType) || !orderbyOptions
+        ? ""
+        : `&$orderby=${encodeURIComponent(String(orderbyOptions).trim())}`;
+
     const url = `${_getAPIServer(
       serverEnvironmentPrefix
-    )}/itwins/${endpoint}${subClass}${paging}${search}`;
+    )}/itwins/${endpoint}${subClass}${paging}${search}${orderby}`;
 
     const makeFetchRequest = async () => {
       const options: RequestInit = {
@@ -165,6 +173,7 @@ export const useITwinData = ({
     data,
     serverEnvironmentPrefix,
     filterOptions,
+    orderbyOptions,
     page,
     morePages,
     iTwinSubClass,

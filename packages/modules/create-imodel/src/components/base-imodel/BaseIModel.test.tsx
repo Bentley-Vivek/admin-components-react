@@ -45,6 +45,17 @@ describe("BaseIModel", () => {
       ".iac-button-bar button:first-child"
     ) as HTMLButtonElement;
     expect(confirmButton).toHaveAttribute("aria-disabled", "true");
+
+    const name = container.querySelector(
+      ".iac-inputs-container input"
+    ) as HTMLInputElement;
+    await waitFor(async () =>
+      fireEvent.change(name, {
+        target: { value: "  " },
+      })
+    );
+    expect(confirmButton).toHaveAttribute("aria-disabled", "true");
+
     expect(confirmButton.textContent).toBe("Create");
     await act(() => fireEvent.click(confirmButton));
     expect(actionMock).not.toHaveBeenCalled();
