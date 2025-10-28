@@ -25,7 +25,7 @@ export interface IModelDataHookOptions {
   /** @deprecated in 2.1 It is no longer used as it has no effect on the data fetching. */
   viewMode?: ViewType;
 }
-const DEFAULT_PAGE_SIZE = 100;
+export const DEFAULT_PAGE_SIZE = 100;
 
 export const useIModelData = ({
   iTwinId,
@@ -73,7 +73,13 @@ export const useIModelData = ({
   }, []);
 
   const fetchMore = React.useCallback(() => {
-    if (needsUpdate || status === DataStatus.Fetching || !morePagesAvailable) {
+    if (
+      needsUpdate ||
+      status === DataStatus.Fetching ||
+      status === DataStatus.TokenRequired ||
+      status === DataStatus.ContextRequired ||
+      !morePagesAvailable
+    ) {
       return;
     }
     setPage(page + 1);
@@ -159,6 +165,7 @@ export const useIModelData = ({
           return;
         }
         setIModels([]);
+        setMorePagesAvailable(false);
         setStatus(DataStatus.FetchFailed);
         console.error(e);
       });
@@ -212,6 +219,18 @@ const createFetchIModelsFn = (
       }`
     : "";
   const skip = page * pageSize;
+
+  if (maxCount !== undefined && skip >= maxCount) {
+    const abortController = new AbortController();
+    return {
+      abortController,
+      fetchIModels: async () => ({
+        iModels: [],
+        morePagesAvailable: false,
+      }),
+    };
+  }
+
   const top = maxCount ? Math.min(pageSize, maxCount - skip) : pageSize;
   const paging = `&$skip=${skip}&$top=${top}`;
   const searching = searchText?.trim()

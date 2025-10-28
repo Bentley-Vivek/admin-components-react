@@ -31,6 +31,8 @@ export interface IModelTileProps {
   apiOverrides?: ApiOverrides;
   /** Function to refetch iModels */
   refetchIModels?: () => void;
+  /** Indicates whether the tile should take the full width of its container */
+  fullWidth?: boolean;
 }
 
 /**
@@ -44,6 +46,7 @@ export const IModelTile = ({
   apiOverrides,
   tileProps,
   refetchIModels,
+  fullWidth,
 }: IModelTileProps) => {
   const {
     name,
@@ -90,6 +93,7 @@ export const IModelTile = ({
       isLoading={isLoading}
       status={status}
       isDisabled={isDisabled}
+      style={fullWidth ? { width: "100%" } : undefined}
       {...rest}
     >
       <Tile.Name>

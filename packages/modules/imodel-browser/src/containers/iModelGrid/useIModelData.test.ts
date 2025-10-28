@@ -353,6 +353,54 @@ describe("useIModelData hook", () => {
     expect(result.current.fetchMore).toBeUndefined();
     expect(watcher).toHaveBeenCalledTimes(2);
   });
+
+  it.each([
+    {
+      missing: "accessToken",
+      initialProps: { accessToken: undefined as any, iTwinId: "iTwinId" },
+      supplyProps: { accessToken: "accessToken" },
+    },
+    {
+      missing: "iTwinId",
+      initialProps: { iTwinId: undefined as any, accessToken: "accessToken" },
+      supplyProps: { iTwinId: "iTwinId" },
+    },
+  ])(
+    "does not skip first page if fetchMore called before $missing becomes available",
+    async ({ initialProps, supplyProps }) => {
+      const fetchSpy = jest.spyOn(window, "fetch").mockImplementation(
+        () =>
+          Promise.resolve({
+            ok: true,
+            json: () =>
+              Promise.resolve({
+                iModels: [{ id: "first", displayName: "first" }],
+              }),
+          }) as any
+      );
+
+      const { result, rerender, waitForNextUpdate } = renderHook(
+        (props: any) =>
+          useIModelData({
+            iTwinId: (props as any).iTwinId,
+            accessToken: (props as any).accessToken,
+          }),
+        { initialProps }
+      );
+
+      // Attempt pagination before prerequisite present
+      act(() => result.current.fetchMore?.());
+
+      // Provide missing prerequisite
+      rerender({ ...initialProps, ...supplyProps });
+      await waitForNextUpdate();
+
+      const firstUrl = fetchSpy.mock.calls[0][0] as string;
+      expect(firstUrl).toContain("$skip=0");
+      expect(firstUrl).toContain("$top=100");
+      expect(result.current.iModels[0]?.id).toBe("first");
+    }
+  );
 });
 
 it("fetches data with searchText", async () => {

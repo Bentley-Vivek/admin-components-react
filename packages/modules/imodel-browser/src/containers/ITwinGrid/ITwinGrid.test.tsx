@@ -49,7 +49,9 @@ describe("ITwinGrid", () => {
     const wrapper = render(<ITwinGrid viewMode="cells" />);
 
     // Assert
-    expect(wrapper.getByRole("table")).toBeDefined();
+    expect(
+      wrapper.container.querySelector('div[class$="-table"]')
+    ).toBeInTheDocument();
     expect(wrapper.getByText("No iTwin found.")).toBeDefined();
   });
 
@@ -58,7 +60,9 @@ describe("ITwinGrid", () => {
     const wrapper = render(<ITwinGrid viewMode="cells" />);
 
     // Assert
-    expect(wrapper.getByRole("table")).toBeDefined();
+    expect(
+      wrapper.container.querySelector('div[class$="-table"]')
+    ).toBeInTheDocument();
     expect(wrapper.getAllByRole("row").length).toEqual(3); // First row is header
   });
 

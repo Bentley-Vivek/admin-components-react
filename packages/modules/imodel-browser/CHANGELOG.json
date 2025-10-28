@@ -2,6 +2,66 @@
   "name": "@itwin/imodel-browser-react",
   "entries": [
     {
+      "version": "3.4.3",
+      "tag": "@itwin/imodel-browser-react_v3.4.3",
+      "date": "Fri, 10 Oct 2025 18:56:16 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixed bug where fetching never happens when access token has not yet loaded"
+          }
+        ]
+      }
+    },
+    {
+      "version": "3.4.2",
+      "tag": "@itwin/imodel-browser-react_v3.4.2",
+      "date": "Thu, 09 Oct 2025 13:32:32 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix: Cursor pointer on clickable rows in table"
+          }
+        ]
+      }
+    },
+    {
+      "version": "3.4.1",
+      "tag": "@itwin/imodel-browser-react_v3.4.1",
+      "date": "Wed, 08 Oct 2025 16:14:50 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add `fullWidth` prop to tiles"
+          }
+        ]
+      }
+    },
+    {
+      "version": "3.4.0",
+      "tag": "@itwin/imodel-browser-react_v3.4.0",
+      "date": "Wed, 08 Oct 2025 14:40:05 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updated itwinui to 3.19.4 and prevent clicks on row menu items from propagating up to the row"
+          }
+        ]
+      }
+    },
+    {
+      "version": "3.3.1",
+      "tag": "@itwin/imodel-browser-react_v3.3.1",
+      "date": "Fri, 19 Sep 2025 15:25:03 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix iModelGrid Filtering via postProcessCallback to Show Complete Results Across All Data"
+          }
+        ]
+      }
+    },
+    {
       "version": "3.3.0",
       "tag": "@itwin/imodel-browser-react_v3.3.0",
       "date": "Thu, 11 Sep 2025 13:34:59 GMT",

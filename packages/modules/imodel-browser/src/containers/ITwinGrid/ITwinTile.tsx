@@ -43,6 +43,8 @@ export interface ITwinTileProps {
   removeFromFavorites?(iTwinId: string): Promise<void>;
   /** Function to refetch iTwins */
   refetchITwins?: () => void;
+  /** Indicates whether the tile should take the full width of its container */
+  fullWidth?: boolean;
 }
 
 /**
@@ -58,6 +60,7 @@ export const ITwinTile = ({
   addToFavorites,
   removeFromFavorites,
   refetchITwins,
+  fullWidth,
 }: ITwinTileProps) => {
   const {
     name,
@@ -108,6 +111,7 @@ export const ITwinTile = ({
         isLoading={isLoading}
         status={status}
         isDisabled={isDisabled}
+        style={fullWidth ? { width: "100%" } : undefined}
         {...rest}
       >
         <Tile.Name>

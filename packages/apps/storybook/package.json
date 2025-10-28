@@ -14,7 +14,7 @@
     "@itwin/delete-itwin-react": "workspace:*",
     "@itwin/imodel-browser-react": "workspace:*",
     "@itwin/itwinui-icons-react": "2.10.0",
-    "@itwin/itwinui-react": "3.18.0",
+    "@itwin/itwinui-react": "^3.19.4",
     "@itwin/manage-versions-react": "workspace:*",
     "@itwin/storybook-auth-addon": "workspace:*",
     "@storybook/addon-actions": "^6.5.16",

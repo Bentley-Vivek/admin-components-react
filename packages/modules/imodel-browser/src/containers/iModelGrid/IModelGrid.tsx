@@ -20,8 +20,10 @@ import { _mergeStrings } from "../../utils/_apiOverrides";
 import { ContextMenuBuilderItem } from "../../utils/_buildMenuOptions";
 import { IModelGhostTile } from "../iModelTiles/IModelGhostTile";
 import { IModelTile, IModelTileProps } from "../iModelTiles/IModelTile";
-import { useIModelData } from "./useIModelData";
+import styles from "./IModelGrid.module.scss";
+import { DEFAULT_PAGE_SIZE, useIModelData } from "./useIModelData";
 import { useIModelTableConfig } from "./useIModelTableConfig";
+
 export interface IModelGridProps {
   /**
    * Access token that requires the `imodels:read` scope. Provide a function that returns the token to prevent the token from expiring. Function must be memoized. */
@@ -91,6 +93,8 @@ export interface IModelGridProps {
   maxCount?: number;
   /** Overrides for cell rendering in cells viewMode */
   cellOverrides?: IModelCellOverrides;
+  /** Additional class name for the grid structure */
+  className?: string;
 }
 
 /**
@@ -113,6 +117,7 @@ export const IModelGrid = ({
   pageSize,
   maxCount,
   cellOverrides,
+  className,
 }: IModelGridProps) => {
   const [sort, setSort] = React.useState<IModelSortOptions>(sortOptions);
   const [isSortOnTable, setIsSortOnTable] = React.useState(false);
@@ -173,6 +178,16 @@ export const IModelGrid = ({
     [postProcessCallback, fetchediModels, fetchStatus, searchText]
   );
 
+  React.useEffect(() => {
+    if (
+      iModels.length < (pageSize ?? DEFAULT_PAGE_SIZE) &&
+      fetchMore &&
+      fetchStatus !== DataStatus.Fetching
+    ) {
+      fetchMore();
+    }
+  }, [iModels.length, pageSize, fetchMore, fetchStatus]);
+
   const { columns, onRowClick } = useIModelTableConfig({
     iModelActions,
     onThumbnailClick,
@@ -197,7 +212,7 @@ export const IModelGrid = ({
     return (
       <>
         {viewMode !== "cells" ? (
-          <GridStructure>
+          <GridStructure className={className}>
             {iModels?.map((iModel) => (
               <IModelHookedTile
                 key={iModel.id}
@@ -218,14 +233,19 @@ export const IModelGrid = ({
                 }}
               >
                 {({ ref }) => {
-                  return <IModelGhostTile ref={ref} />;
+                  return (
+                    <IModelGhostTile
+                      ref={ref}
+                      fullWidth={tileOverrides?.fullWidth}
+                    />
+                  );
                 }}
               </InView>
             ) : null}
             {fetchStatus === DataStatus.Fetching && (
               <>
-                <IModelGhostTile />
-                <IModelGhostTile />
+                <IModelGhostTile fullWidth={tileOverrides?.fullWidth} />
+                <IModelGhostTile fullWidth={tileOverrides?.fullWidth} />
               </>
             )}
           </GridStructure>
@@ -262,6 +282,9 @@ export const IModelGrid = ({
               onBottomReached={fetchMore}
               autoResetFilters={false}
               autoResetSortBy={false}
+              bodyProps={{
+                className: onThumbnailClick ? styles.rowCursor : "",
+              }}
             />
           </ThemeProvider>
         )}

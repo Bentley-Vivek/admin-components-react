@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 import "@testing-library/jest-dom";
 
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import React from "react";
 
-import { DataStatus, IModelCellOverrides, IModelGrid } from "../..";
+import { DataStatus, IModelCellOverrides, IModelFull, IModelGrid } from "../..";
 import * as useIModelData from "./useIModelData";
 
 describe("IModelGrid", () => {
@@ -87,7 +87,9 @@ describe("IModelGrid", () => {
   });
   it("should display the table and correct rows", () => {
     const wrapper = render(<IModelGrid viewMode="cells" />);
-    expect(wrapper.getByRole("table")).toBeDefined();
+    expect(
+      wrapper.container.querySelector('div[class$="-table"]')
+    ).toBeInTheDocument();
     expect(wrapper.getAllByRole("row").length).toEqual(3); // Header row + 2 data rows
   });
   it("should prevent onThumbnailClick from being called when button in cell is clicked with stopPropagation", () => {
@@ -184,5 +186,121 @@ describe("IModelGrid", () => {
     // the dropdown should open and show the actions label Action 1 and Action 2
     menuItems = queryAllByRole("menuitem");
     expect(menuItems.length).toBe(2); // Action 1 and Action 2
+  });
+
+  const generateMockIModels = (count: number, prefix = ""): IModelFull[] => {
+    return Array.from({ length: count }).map((_, index) => ({
+      id: `${prefix}${index}`,
+      displayName: `${prefix}${index}`,
+      name: `${prefix}${index}`,
+      description: `${prefix}-description`,
+    }));
+  };
+
+  it("should show all data with postProcessCallback filtering", async () => {
+    const pageSize = 3;
+    const firstPageIModels = generateMockIModels(3, "iModel");
+    firstPageIModels[1].description = "unmatched";
+    firstPageIModels[2].description = "unmatched";
+
+    const secondPageIModels = generateMockIModels(3, "iModel");
+    secondPageIModels[1].description = "unmatched";
+    secondPageIModels[2].description = "unmatched";
+
+    const thirdPageIModels = generateMockIModels(3, "iModel");
+
+    const mockFetchMore = jest.fn();
+
+    const useIModelDataMock = jest.spyOn(useIModelData, "useIModelData");
+
+    useIModelDataMock.mockReturnValue({
+      iModels: firstPageIModels,
+      status: DataStatus.Complete,
+      fetchMore: mockFetchMore,
+      refetchIModels: jest.fn(),
+    });
+
+    const postProcessCallback = jest
+      .fn()
+      .mockImplementation((iModels: IModelFull[]) => {
+        return iModels.filter(
+          (iModel) => iModel.description === "iModel-description"
+        );
+      });
+
+    const { rerender } = render(
+      <IModelGrid
+        viewMode="cells"
+        pageSize={pageSize}
+        postProcessCallback={postProcessCallback}
+      />
+    );
+
+    await waitFor(() => {
+      expect(mockFetchMore).toHaveBeenCalled();
+    });
+
+    useIModelDataMock.mockReturnValue({
+      iModels: [...firstPageIModels, ...secondPageIModels],
+      status: DataStatus.Complete,
+      fetchMore: mockFetchMore,
+      refetchIModels: jest.fn(),
+    });
+
+    mockFetchMore.mockClear();
+    postProcessCallback.mockImplementation((iModels: IModelFull[]) => {
+      return iModels.filter(
+        (iModel) => iModel.description === "iModel-description"
+      );
+    });
+
+    rerender(
+      <IModelGrid
+        viewMode="cells"
+        pageSize={pageSize}
+        postProcessCallback={postProcessCallback}
+      />
+    );
+
+    expect(postProcessCallback).toHaveBeenCalledWith(
+      [...firstPageIModels, ...secondPageIModels],
+      DataStatus.Complete,
+      undefined
+    );
+
+    await waitFor(() => {
+      expect(mockFetchMore).toHaveBeenCalled();
+    });
+
+    useIModelDataMock.mockReturnValue({
+      iModels: [...firstPageIModels, ...secondPageIModels, ...thirdPageIModels],
+      status: DataStatus.Complete,
+      fetchMore: mockFetchMore,
+      refetchIModels: jest.fn(),
+    });
+
+    mockFetchMore.mockClear();
+
+    postProcessCallback.mockImplementation((iModels: IModelFull[]) => {
+      return iModels.filter(
+        (iModel) => iModel.description === "iModel-description"
+      );
+    });
+
+    rerender(
+      <IModelGrid
+        viewMode="cells"
+        pageSize={pageSize}
+        postProcessCallback={postProcessCallback}
+      />
+    );
+
+    expect(postProcessCallback).toHaveBeenCalledWith(
+      [...firstPageIModels, ...secondPageIModels, ...thirdPageIModels],
+      DataStatus.Complete,
+      undefined
+    );
+
+    expect(mockFetchMore).not.toHaveBeenCalled();
   });
 });

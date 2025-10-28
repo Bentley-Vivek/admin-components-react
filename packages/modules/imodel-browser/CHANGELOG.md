@@ -1,6 +1,41 @@
 # Change Log - @itwin/imodel-browser-react
 
-This log was last generated on Thu, 11 Sep 2025 13:34:59 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Oct 2025 18:56:16 GMT and should not be manually modified.
+
+## 3.4.3
+Fri, 10 Oct 2025 18:56:16 GMT
+
+### Patches
+
+- Fixed bug where fetching never happens when access token has not yet loaded
+
+## 3.4.2
+Thu, 09 Oct 2025 13:32:32 GMT
+
+### Patches
+
+- Fix: Cursor pointer on clickable rows in table
+
+## 3.4.1
+Wed, 08 Oct 2025 16:14:50 GMT
+
+### Patches
+
+- Add `fullWidth` prop to tiles
+
+## 3.4.0
+Wed, 08 Oct 2025 14:40:05 GMT
+
+### Minor changes
+
+- Updated itwinui to 3.19.4 and prevent clicks on row menu items from propagating up to the row
+
+## 3.3.1
+Fri, 19 Sep 2025 15:25:03 GMT
+
+### Patches
+
+- Fix iModelGrid Filtering via postProcessCallback to Show Complete Results Across All Data
 
 ## 3.3.0
 Thu, 11 Sep 2025 13:34:59 GMT

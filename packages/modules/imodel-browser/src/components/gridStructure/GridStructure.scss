@@ -10,11 +10,11 @@ $space-for-shadows: 3px;
   justify-content: space-between;
   grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
   grid-auto-rows: min-content;
-  margin: calc(22px - #{$space-for-shadows})
+  padding: calc(22px - #{$space-for-shadows})
     calc(#{$responsive-grid-margin} - #{$space-for-shadows});
   gap: $responsive-grid-gutter;
   overflow: hidden;
-  padding: $space-for-shadows;
+  margin: $space-for-shadows;
 
   > * {
     display: inline-flex;

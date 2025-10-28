@@ -31,12 +31,12 @@ export const _buildManagedContextMenuOptions: <T>(
       return (
         <MenuItem
           {...contextMenuProps}
-          onClick={() => {
+          onClick={(e?: React.MouseEvent) => {
+            e?.stopPropagation();
             closeMenu?.();
             onClick?.(value, refetchData);
           }}
           key={key}
-          value={value}
         />
       );
     });

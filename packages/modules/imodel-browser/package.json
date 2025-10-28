@@ -2,7 +2,7 @@
   "name": "@itwin/imodel-browser-react",
   "description": "Components that let the user browse the iModels of a context and select one.",
   "repository": "https://github.com/iTwin/admin-components-react/tree/main/packages/modules/imodel-browser",
-  "version": "3.3.0",
+  "version": "3.4.3",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "cjs/index.d.ts",
@@ -36,7 +36,7 @@
     "react-intersection-observer": "^8.31.1"
   },
   "devDependencies": {
-    "@itwin/itwinui-react": "^3.17.3",
+    "@itwin/itwinui-react": "^3.19.4",
     "@rollup/plugin-commonjs": "~17.1.0",
     "@rollup/plugin-url": "^8.0.1",
     "@svgr/rollup": "^5.5.0",
